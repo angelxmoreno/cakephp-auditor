@@ -1,8 +1,19 @@
 {
-    "name": "your-name-here/Auditor",
+    "name": "angelxmoreno/cakephp-auditor",
     "description": "Auditor plugin for CakePHP",
     "type": "cakephp-plugin",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Angel S. Moreno",
+            "homepage": "https://www.linkedin.com/in/angelxmoreno/",
+            "role": "Author"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/angelxmoreno/cakephp-auditor/issues",
+        "source": "https://github.com/angelxmoreno/cakephp-auditor"
+    },
     "require": {
         "cakephp/cakephp": "^3.4"
     },
