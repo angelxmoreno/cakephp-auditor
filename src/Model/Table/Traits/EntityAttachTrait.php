@@ -10,6 +10,8 @@ use Cake\Utility\Inflector;
 /**
  * Trait EntityAttachTrait
  *
+ * Attaches audited model display names to the AuditResultSet
+ *
  * @package Auditor\Model\Table\Traits
  */
 trait EntityAttachTrait
@@ -18,36 +20,35 @@ trait EntityAttachTrait
      * @var array
      */
     protected $entity_class_map = [];
-
-
+    
     /**
-     * @param ResultSet $results
+     * @param ResultSet $audits
      *
      * @return ResultSet
      */
-    public function attachForeignEntities(ResultSet $results)
+    public function attachForeignEntities(ResultSet $audits)
     {
-        $map    = $this->createEntityTableMap($results);
-        $lookup = $this->createEntityLookUpArray($map);
-        foreach ($results as $key => $result) {
+        $entity_table_map = $this->createEntityTableMap($audits);
+        $lookup           = $this->createEntityLookUpList($entity_table_map);
+        foreach ($audits as $key => $result) {
             $result['attached'] = isset($lookup[$result->model_name][$result->id])
                 ? $lookup[$result->model_name][$result->id]
                 : $result->id;
         }
 
-        return $results;
+        return $audits;
     }
 
     /**
-     * @param array $map
+     * @param array $entity_table_map
      *
      * @return array
      */
-    public function createEntityLookUpArray(array $map)
+    protected function createEntityLookUpList(array $entity_table_map)
     {
         $lookup = [];
 
-        foreach ($map as $entity_class => $meta) {
+        foreach ($entity_table_map as $entity_class => $meta) {
             /** @var AppTable $table */
             $table   = $meta['table'];
             $ids     = $meta['ids'];
@@ -65,17 +66,17 @@ trait EntityAttachTrait
     }
 
     /**
-     * @param ResultSet $results
+     * @param ResultSet $audits
      *
      * @return array
      */
-    public function createEntityTableMap(ResultSet $results)
+    protected function createEntityTableMap(ResultSet $audits)
     {
         $entity_map = [];
 
-        foreach ($results as $result) {
-            $entity_class_name = $result->model_name;
-            $entity_id         = $result->model_uid;
+        foreach ($audits as $audit) {
+            $entity_class_name = $audit->model_name;
+            $entity_id         = $audit->model_uid;
 
             if (!array_key_exists($entity_class_name, $entity_map)) {
                 $entity_map[$entity_class_name] = [
@@ -97,7 +98,7 @@ trait EntityAttachTrait
      *
      * @return AppTable
      */
-    public function getTableFromEntity($entity_name)
+    protected function getTableFromEntity($entity_name)
     {
         if (!array_key_exists($entity_name, $this->entity_class_map)) {
             $parts                                = explode('\\', $entity_name);
