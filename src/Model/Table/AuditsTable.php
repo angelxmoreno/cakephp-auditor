@@ -7,21 +7,24 @@ use Auditor\Model\Table\Traits\EntityAttachTrait;
 use Cake\Database\Schema\TableSchema;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
+use Auditor\Model\Entity\Audit;
+use Cake\Datasource\EntityInterface;
+use Cake\ORM;
 
 /**
  * Audits Model
  *
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\UsersTable|ORM\Association\BelongsTo $Users
  *
- * @method \Auditor\Model\Entity\Audit get($primaryKey, $options = [])
- * @method \Auditor\Model\Entity\Audit newEntity($data = null, array $options = [])
- * @method \Auditor\Model\Entity\Audit[] newEntities(array $data, array $options = [])
- * @method \Auditor\Model\Entity\Audit|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \Auditor\Model\Entity\Audit patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \Auditor\Model\Entity\Audit[] patchEntities($entities, array $data, array $options = [])
- * @method \Auditor\Model\Entity\Audit findOrCreate($search, callable $callback = null, $options = [])
+ * @method Audit get($primaryKey, $options = [])
+ * @method Audit newEntity($data = null, array $options = [])
+ * @method Audit[] newEntities(array $data, array $options = [])
+ * @method Audit|bool save(EntityInterface $entity, $options = [])
+ * @method Audit patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Audit[] patchEntities($entities, array $data, array $options = [])
+ * @method Audit findOrCreate($search, callable $callback = null, $options = [])
  *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin ORM\Behavior\TimestampBehavior
  */
 class AuditsTable extends AppTable
 {
@@ -29,8 +32,8 @@ class AuditsTable extends AppTable
 
     protected function _initializeSchema(TableSchema $schema)
     {
-        $schema->columnType('current', 'json');
-        $schema->columnType('previous', 'json');
+        $schema->setColumnType('current', 'json');
+        $schema->setColumnType('previous', 'json');
 
         return $schema;
     }
@@ -86,9 +89,9 @@ class AuditsTable extends AppTable
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @param ORM\RulesChecker $rules The rules object to be modified.
      *
-     * @return \Cake\ORM\RulesChecker
+     * @return ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules)
     {

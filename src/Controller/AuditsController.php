@@ -2,14 +2,16 @@
 
 namespace Auditor\Controller;
 
+use Auditor\Model\Entity\Audit;
+use Auditor\Model\Table\AuditsTable;
 use Cake\ORM\ResultSet;
 
 /**
  * Audits Controller
  *
- * @property \Auditor\Model\Table\AuditsTable $Audits
+ * @property AuditsTable $Audits
  *
- * @method \Auditor\Model\Entity\Audit[] paginate($object = null, array $settings = [])
+ * @method Audit[] paginate($object = null, array $settings = [])
  */
 class AuditsController extends AppController
 {

@@ -1,20 +1,21 @@
 <?php
+
 namespace Auditor\Model\Entity;
 
-use Cake\ORM\Entity;
 use App\Model\Entity\AppEntity;
+
 /**
  * Audit Entity
  *
- * @property int $id
- * @property int $user_id
- * @property string $model_name
- * @property int $model_uid
- * @property string $action
- * @property array $previous
- * @property array $current
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
+ * @property int                        $id
+ * @property int                        $user_id
+ * @property string                     $model_name
+ * @property int                        $model_uid
+ * @property string                     $action
+ * @property array                      $previous
+ * @property array                      $current
+ * @property \Cake\I18n\FrozenTime      $created
+ * @property \Cake\I18n\FrozenTime      $modified
  *
  * @property \Auditor\Model\Entity\User $user
  */
@@ -30,15 +31,16 @@ class Audit extends AppEntity
      *
      * @var array
      */
-    protected $_accessible = [
-        'user_id' => true,
-        'model_name' => true,
-        'model_uid' => true,
-        'action' => true,
-        'previous' => true,
-        'current' => true,
-        'created' => true,
-        'modified' => true,
-        'user' => true
-    ];
+    protected $_accessible
+        = [
+            'user_id'    => true,
+            'model_name' => true,
+            'model_uid'  => true,
+            'action'     => true,
+            'previous'   => true,
+            'current'    => true,
+            'created'    => true,
+            'modified'   => true,
+            'user'       => true,
+        ];
 }

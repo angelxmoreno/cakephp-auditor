@@ -4,7 +4,6 @@ namespace Auditor\Controller;
 
 use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
-use Cake\ORM\Query;
 
 /**
  * Users Controller
@@ -41,13 +40,13 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
 
         $audits = $this->paginate('Audits', [
-            'limit' => 10,
+            'limit'      => 10,
             'conditions' => [
-                'Audits.user_id' => $id
+                'Audits.user_id' => $id,
             ],
-            'order' => [
-                'Audits.created' => 'DESC'
-            ]
+            'order'      => [
+                'Audits.created' => 'DESC',
+            ],
         ]);
 
         $this->set(compact('user', 'audits'));

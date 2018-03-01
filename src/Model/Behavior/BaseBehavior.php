@@ -6,6 +6,11 @@ use Auditor\Model\Table\AuditsTable;
 use Cake\ORM\Behavior;
 use Cake\ORM\TableRegistry;
 
+/**
+ * Class BaseBehavior
+ *
+ * @package Auditor\Model\Behavior
+ */
 abstract class BaseBehavior extends Behavior
 {
     const AUDIT_MODEL = 'Auditor.Audits';
@@ -15,7 +20,6 @@ abstract class BaseBehavior extends Behavior
      * @var AuditsTable
      */
     protected $audit_table;
-
 
     /**
      *
@@ -29,5 +33,4 @@ abstract class BaseBehavior extends Behavior
 
         return $this->audit_table;
     }
-
 }
