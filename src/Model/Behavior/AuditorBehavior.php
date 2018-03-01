@@ -18,8 +18,6 @@ class AuditorBehavior extends BaseBehavior
      */
     protected $_defaultConfig
         = [
-            'attach'            => true,
-            'skip_fields'       => [],
             'association_names' => [
                 'AuditsCreated' => 'create',
                 'AuditsDeleted' => 'delete',
