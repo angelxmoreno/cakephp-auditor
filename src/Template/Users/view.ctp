@@ -1,15 +1,24 @@
 <?php
 /**
- * @var \App\View\AppView             $this
- * @var \App\Model\Entity\User        $user
- * @var \Auditor\Model\Entity\Audit[] $audits
+ * @var \App\View\AppView $this
+ * @var \Cake\Datasource\EntityInterface $user
+ * @var \Cake\Datasource\EntityInterface[] $audits
  */
-$this->extend('/Common/view');
-$this->assign('title', __('User'));
-$this->assign('sub_title', h($user->name));
 ?>
-<div class="container">
-    <table class="table">
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('List Audits'), ['controller'=>'Audits','action' => 'index']) ?> </li>
+    </ul>
+</nav>
+<div class="users view large-9 medium-8 columns content">
+    <h3><?= h($user->name) ?></h3>
+    <table class="vertical-table">
+        <tr>
+            <th scope="row"><?= __('Id') ?></th>
+            <td><?= $this->Number->format($user->id) ?></td>
+        </tr>
         <tr>
             <th scope="row"><?= __('Name') ?></th>
             <td><?= h($user->name) ?></td>
@@ -23,18 +32,11 @@ $this->assign('sub_title', h($user->name));
             <td><?= h($user->created) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Is Admin') ?></th>
-            <td><?= $user->is_admin ? __('Yes') : __('No'); ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Is Superadmin') ?></th>
-            <td><?= $user->is_superadmin ? __('Yes') : __('No'); ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Is Active') ?></th>
-            <td><?= $user->is_active ? __('Yes') : __('No'); ?></td>
+            <th scope="row"><?= __('Modified') ?></th>
+            <td><?= h($user->modified) ?></td>
         </tr>
     </table>
+
     <div class="row">
         <h2><?= __('Audits') ?></h2>
         <? if (count($audits) === 0) : ?>
@@ -43,38 +45,37 @@ $this->assign('sub_title', h($user->name));
             </p>
         <? else : ?>
             <? foreach ($audits as $audit): ?>
-                <ul class="list-inline">
-                    <li><?= $this->Time->timeAgoInWords($audit->created) ?></li>
-                    <li>
-                        <?= $this->Html->link(implode(' ',
-                            [
-                                $audit->action,
-                                $audit->model_name,
-                                $audit->model_uid,
-                            ]),
-                            [
-                                'controller' => 'audits',
-                                'action'     => 'view',
-                                $audit->id,
-                            ]);
-                        ?>
-                    </li>
-                </ul>
+        <table class="vertical-table">
+            <tr>
+                <th scope="row"><?= __('Created') ?></th>
+                <td><?= $this->Time->timeAgoInWords($audit->created) ?></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= __('Action') ?></th>
+                <td><?= h($audit->action) ?></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= __('Model') ?></th>
+                <td><?= h($audit->model_name) ?></td>
+            </tr>
+            <tr>
+                <th scope="row"><?= __('Model Id') ?></th>
+                <td><?=h($audit->model_uid) ?></td>
+            </tr>
+            <tr>
+                <td>
+                    <?= $this->Html->link(__('View'), [
+                            'controller' => 'audits',
+                            'action'     => 'view',
+                            $audit->id,
+                        ]);
+                    ?>
+                </td>
+            </tr>
+        </table>
                 <hr/>
             <? endforeach; ?>
             <?= $this->element('pagination') ?>
         <? endif; ?>
     </div>
 </div>
-<? $this->start('side_nav') ?>
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading"><?= __('Actions') ?></div>
-
-    <!-- List group -->
-    <div class="list-group">
-        <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'list-group-item']) ?>
-        <?= $this->Html->link(__('List Audits'), ['controller' => 'Audits'], ['class' => 'list-group-item']) ?>
-    </div>
-</div>
-<? $this->end() ?>

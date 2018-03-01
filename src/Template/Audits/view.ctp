@@ -1,18 +1,22 @@
 <?php
 /**
- * @var \App\View\AppView                $this
+ * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $audit
  */
-$this->extend('/Common/view');
-$this->assign('title', __('Audit'));
-$this->assign('sub_title', h($audit->action) . ' ' . h($audit->model_name));
 ?>
-<div class="container">
-    <table class="table">
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('List Audits'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+    </ul>
+</nav>
+<div class="audits view large-9 medium-8 columns content">
+    <h3><?= h($audit->id) ?></h3>
+    <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $audit->has('user') ? $this->Html->link($audit->user->name,
-                    ['controller' => 'Users', 'action' => 'view', $audit->user->id]) : '' ?></td>
+            <td><?= $audit->has('user') ? $this->Html->link($audit->user->name, ['controller' => 'Users', 'action' => 'view', $audit->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Model Name') ?></th>
@@ -21,10 +25,6 @@ $this->assign('sub_title', h($audit->action) . ' ' . h($audit->model_name));
         <tr>
             <th scope="row"><?= __('Action') ?></th>
             <td><?= h($audit->action) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($audit->created) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Previous') ?></th>
@@ -42,18 +42,21 @@ $this->assign('sub_title', h($audit->action) . ' ' . h($audit->model_name));
                 </xmp>
             </td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('Id') ?></th>
+            <td><?= $this->Number->format($audit->id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Model Uid') ?></th>
+            <td><?= $this->Number->format($audit->model_uid) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Created') ?></th>
+            <td><?= h($audit->created) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Modified') ?></th>
+            <td><?= h($audit->modified) ?></td>
+        </tr>
     </table>
 </div>
-<? $this->start('side_nav') ?>
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading"><?= __('Actions') ?></div>
-
-    <!-- List group -->
-    <div class="list-group">
-        <?= $this->Html->link(__('List Audits'), ['action' => 'index'], ['class' => 'list-group-item']) ?>
-        <?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index'],
-            ['class' => 'list-group-item']) ?>
-    </div>
-</div>
-<? $this->end() ?>
